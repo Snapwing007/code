@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int findIndex(vector<int>& arr, int n, int k) {
+    int start = 0;
+    int end = n - 1;
+    while (start <= end) {
+        int mid = (start + end) / 2;
+        if (arr[mid] == k) {
+            return mid;
+        }
+        else if (arr[mid] < k) {
+            start = mid + 1;
+        }
+        else {
+            end = mid - 1;
+        }
+    }
+    return end + 1;
+}
+
+int main() {
+    //freopen("SUMATION.inp","r",stdin);
+    //freopen("SUMATION.out","w",stdout);
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    sort(a.begin(), a.end());
+    double res = 0;
+    while (a.size() > 2) {
+        int k = a[0] + a[1];
+        res = res + k * 0.05;
+        a.erase(a.begin(), a.begin() + 2);
+        a.insert(a.begin() + findIndex(a, a.size(), k), k);
+    }
+    res = res + (a[0] + a[1]) * 0.05;
+    cout << fixed;
+    cout.precision(2);
+    cout << res << endl;
+    return 0;
+}
